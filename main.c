@@ -392,13 +392,10 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 {
   if (htim->Instance == TIM2)
   {
-    if (HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1) > risingEdgeTime)
+    if (HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1) < risingEdgeTime)
     {
       risingEdgeTime = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1);
-    }
-    else
-    {
-      fallingEdgeTime = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1);
+      fallingEdgeTime = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_2);
 
       // Calculate period and pulse width
       uint32_t period = fallingEdgeTime - risingEdgeTime;
